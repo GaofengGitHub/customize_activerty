@@ -2,9 +2,9 @@ import axios from 'axios';
 import Qs from 'qs';
 import {
   API_CONFIG,HOST_CONFIG
-} from '../constans/Urls';
+} from '../constants/Urls';
 import {refreshTokenTimer} from '../actions/main';
-import {store} from '../root';
+import {store} from '../index';
 import myStore from '../utils/store';
 axios.defaults.baseURL = HOST_CONFIG;
 axios.defaults.timeout = 2500;
@@ -24,7 +24,7 @@ export const addResumeAllInfo = (obj, successCB, errorCB) => {
       store.dispatch(refreshTokenTimer());
       successCB && successCB(response.data);
     }).catch((error) => {
-      method.checkToken(error,errorCB)
+      //method.checkToken(error,errorCB)
     })
 }
 export const getSchoolListNew = (nextUrl,orgName,successCB, errorCB) => {
@@ -47,7 +47,7 @@ export const getSchoolListNew = (nextUrl,orgName,successCB, errorCB) => {
       store.dispatch(refreshTokenTimer());
       successCB && successCB(response.data);
     }).catch((error) => {
-      method.checkToken(error,errorCB)
+      //method.checkToken(error,errorCB)
     })
 }
 export const getMyResume = (successCB, errorCB) => {
@@ -67,7 +67,7 @@ export const getMyResume = (successCB, errorCB) => {
       store.dispatch(refreshTokenTimer());
       successCB && successCB(response.data);
     }).catch((error) => {
-      method.checkToken(error,errorCB)
+      //method.checkToken(error,errorCB)
     })
 }
 export const sendCheckMsg = (phone, smsType, successCB, errorCB) => {
@@ -180,7 +180,7 @@ export const tokenExchange = (successCB, errorCB) => {
       // store.dispatch(refreshTokenTimer());
       successCB && successCB(response.data);
     }).catch((error) => {
-      method.checkToken(error,errorCB)
+      //method.checkToken(error,errorCB)
     })
 }
 export const getAreaListNew = (positionType,successCB, errorCB) => {
@@ -204,7 +204,7 @@ export const getAreaListNew = (positionType,successCB, errorCB) => {
       store.dispatch(refreshTokenTimer());
       successCB && successCB(response.data);
     }).catch((error) => {
-      method.checkToken(error,errorCB)
+      //method.checkToken(error,errorCB)
     })
 }
 export const getJobListPage = (name,type,industry,area,pageNo, successCB, errorCB) => {
@@ -231,7 +231,7 @@ export const getJobListPage = (name,type,industry,area,pageNo, successCB, errorC
       store.dispatch(refreshTokenTimer());
       successCB && successCB(response.data);
     }).catch((error) => {
-      method.checkToken(error,errorCB)
+      //method.checkToken(error,errorCB)
     })
 }
 export const getCollectListPc = (pageNo, successCB, errorCB) => {
@@ -254,7 +254,7 @@ export const getCollectListPc = (pageNo, successCB, errorCB) => {
       store.dispatch(refreshTokenTimer());
       successCB && successCB(response.data);
     }).catch((error) => {
-      method.checkToken(error,errorCB)
+      //method.checkToken(error,errorCB)
     })
 }
 export const getPcSendList = (successCB, errorCB) => {
@@ -274,7 +274,7 @@ export const getPcSendList = (successCB, errorCB) => {
       store.dispatch(refreshTokenTimer());
       successCB && successCB(response.data);
     }).catch((error) => {
-      method.checkToken(error,errorCB)
+      //method.checkToken(error,errorCB)
     })
 }
 export const getJobDetail = (id, successCB, errorCB) => {
@@ -298,7 +298,7 @@ export const getJobDetail = (id, successCB, errorCB) => {
       store.dispatch(refreshTokenTimer());
       successCB && successCB(response.data);
     }).catch((error) => {
-      method.checkToken(error,errorCB)
+      //method.checkToken(error,errorCB)
     })
 }
 export const getPositionDeliverDetail = (id, deliverId, successCB, errorCB) => {
@@ -323,7 +323,7 @@ export const getPositionDeliverDetail = (id, deliverId, successCB, errorCB) => {
       store.dispatch(refreshTokenTimer());
       successCB && successCB(response.data);
     }).catch((error) => {
-      method.checkToken(error,errorCB)
+      //method.checkToken(error,errorCB)
     })
 }
 export const sendResume = (positionId, successCB, errorCB) => {
@@ -347,7 +347,7 @@ export const sendResume = (positionId, successCB, errorCB) => {
       store.dispatch(refreshTokenTimer());
       successCB && successCB(response.data);
     }).catch((error) => {
-      method.checkToken(error,errorCB)
+      //method.checkToken(error,errorCB)
     })
 }
 export const collectJob = (id, successCB, errorCB) => {
@@ -371,7 +371,7 @@ export const collectJob = (id, successCB, errorCB) => {
       store.dispatch(refreshTokenTimer());
       successCB && successCB(response.data);
     }).catch((error) => {
-      method.checkToken(error,errorCB)
+      //method.checkToken(error,errorCB)
     })
 }
 export const cancelCollectJob = (id, successCB, errorCB) => {
@@ -395,7 +395,7 @@ export const cancelCollectJob = (id, successCB, errorCB) => {
       store.dispatch(refreshTokenTimer());
       successCB && successCB(response.data);
     }).catch((error) => {
-      method.checkToken(error,errorCB)
+      //method.checkToken(error,errorCB)
     })
 }
 
