@@ -1,8 +1,9 @@
-import App from '../App';
+
+import MainContainer from '../containers/MainContainer'
 
 export default [
     { path: '/',
-      component: App
+      component: MainContainer
     //   indexRoute: { component: Dashboard },
     //   childRoutes: [
     //     { path: 'about', component: About },

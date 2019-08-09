@@ -15,17 +15,14 @@
  * limitations under the License.
  *
  */
-import { combineReducers } from 'redux'; 
-import read from './read';
-import category from './category'; 
-import login from './login';
-import app from './app';
+import * as types from '../constants/ActionTypes'; 
 
-const rootReducer = combineReducers({
-  read,
-  category,
-  login,
-  app
-});
+// export function showModelOrHide(handleClass) {
+//   return {
+//     type: types.SHOW_MODEL_OR_HIDE,
+//     handleClass
+//   };
+// }
 
-export default rootReducer;
+
+

@@ -15,17 +15,20 @@
  * limitations under the License.
  *
  */
-import { combineReducers } from 'redux'; 
-import read from './read';
-import category from './category'; 
-import login from './login';
-import app from './app';
+import * as types from '../constants/ActionTypes';
 
-const rootReducer = combineReducers({
-  read,
-  category,
-  login,
-  app
-});
+const initialState = { 
+    handleClass:"" 
+};
 
-export default rootReducer;
+export default function app(state = initialState, action) {
+  switch (action.type) {
+    // case types.SHOW_MODEL_OR_HIDE:
+    //     return Object.assign({}, state, {
+    //         handleClass: action.handleClass
+    //     });
+    
+    default:
+      return state;
+  }
+}

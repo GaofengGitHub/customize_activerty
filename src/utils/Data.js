@@ -10,6 +10,28 @@ axios.defaults.baseURL = HOST_CONFIG;
 axios.defaults.timeout = 2500;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
+export const getCustomizeInfo = (id, successCB, errorCB) => {
+  axios({
+      method: 'POST',
+      url: API_CONFIG.getCustomizeInfo,
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      data:{
+        id:id
+      },
+      transformRequest: [function (data) {
+        // 对 data 进行任意转换处理
+        return Qs.stringify(data)
+      }]
+    })
+    .then((response) => {
+      successCB && successCB(response.data);
+    }).catch((error) => {
+      errorCB && errorCB(error);
+    })
+}
+
 export const addResumeAllInfo = (obj, successCB, errorCB) => {
   axios({
       method: 'POST',

@@ -16,39 +16,28 @@
  *
  */
 import React from 'react';
-import {Image,StyleSheet} from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 // import Icon from 'react-native-vector-icons/Ionicons';
-import Main from '../pages/MainPage/Main';
+// import Main from '../pages/MainPage/Main';
+import App from '../App';
 import * as mainCreators from '../actions/main';
 
 let home;
 
 class MainContainer extends React.Component {
-  static navigationOptions = {
-    title: '首页',
-    header:null,
-    tabBarIcon: ({ focused, tintColor }) => {
-      if(focused){
-        home=require(`../img/main/nav-index-active.png`)
-      }else{ 
-        home=require(`../img/main/nav-index.png`)
-      } 
-      return <Image source={home} style={{"width":20}} resizeMode="contain"></Image>
-    }
-  };
+  
 
   componentWillMount(){
     const { mainActions } = this.props;
-    mainActions.startTokenThread();
+    // mainActions.startTokenThread();
   }
 
   static componentDidMount() {
   }
 
   render() {
-    return <Main {...this.props} />;
+    return <App {...this.props} />;
   }
 }
 
@@ -63,10 +52,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const styles = StyleSheet.create({
-  tabIcon:{
-    width:25
-  }
-})
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainContainer);

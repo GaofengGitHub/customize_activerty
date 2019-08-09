@@ -1,0 +1,83 @@
+.prize {
+    width: 100%;
+    margin: 0 auto;
+    position: absolute;
+    z-index: 14;
+  }
+  
+  .prize__container {
+    width: 80%;
+    /* height: 359px; */
+    /* border-radius: 5px; */
+    margin: 0 auto;
+    
+  }
+  
+  .container__area {
+    width: 100%;
+    height: 100%;
+    padding: 0.48rem;
+    box-sizing: border-box;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+  }
+  
+  .begin__btn {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 4px;
+    background-color: aliceblue;
+    color: #999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: calc(50% - 1.25rem);
+    top: calc(50% - 1.25rem);
+  }
+  
+  .area__row {
+    width: 100%;
+    height: 24%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .row__item {
+    width: 24%;
+    height: 100%;
+    border-radius: 4px;
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position:relative;
+  }
+  
+  .row__item-active {
+    background-color: aquamarine;
+  }
+
+ 
+  .theRealFlashLight {
+    width: .5rem;
+    height: .5rem;
+    position: absolute;
+  }
+  .rawImg{
+      width:100%;
+      height:100%;
+      
+  }
+  .shadeItem{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background-color:rgba(0,0,0,0.7);
+    border-radius:4px;
+  }
