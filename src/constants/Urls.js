@@ -58,7 +58,7 @@ export const APP_OPERATION_MANUAL = HOST_CONFIG + 'resources/operation-document.
 /*接口地址*/
 export const API_CONFIG = {
     //登录
-    getCustomizeInfo: HOST_CONFIG + 'client/activity/templateCon/ceshi',
+    getCustomizeInfo: HOST_CONFIG + 'client/activity/templateCon/getTemplate',
     //登录
     login: HOST_CONFIG + 'mobile/login/userLogin',
     //天气

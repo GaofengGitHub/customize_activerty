@@ -24,10 +24,10 @@ class RowItem extends React.PureComponent {
   render() {
     const { content, activedId,shadeShow,idx } = this.props;
     return (
-      <div className={activedId === parseInt(idx) ? 'row__item row__item-active' : 'row__item'} id={`row_item_${idx}`} style={{background: `url(${Lottery.defaultProps.data.rawItemBg}) left top / 100% 100% no-repeat`}}>
+      <div className={activedId === parseInt(idx) ? 'row__item row__item-active' : 'row__item'} id={`row_item_${idx}`} style={{background: `url(${Lottery.defaultProps.rawItemBg}) left top / 100% 100% no-repeat`}}>
         {/* {content} */}
         <div>
-          <img  src={content.src} className="rawImg" />
+          <img  src={content.imageUrl} className="rawImg" />
           {shadeShow?(activedId !== parseInt(idx) ? <div className="shadeItem"></div>:<React.Fragment></React.Fragment>):<React.Fragment></React.Fragment>}
           
         </div>
@@ -41,7 +41,7 @@ class Lottery extends React.PureComponent {
     super(props)
     this.state = {
       // 九宫格内容list
-      list:props.data.rawList!==null?props.data.rawList:Lottery.defaultProps.data.rawList ,
+      list:props.rawList!==null?props.rawList:Lottery.defaultProps.rawList ,
       // 被选中的格子的ID
       activedId: '',
       // 中奖ID
@@ -52,9 +52,9 @@ class Lottery extends React.PureComponent {
       actTimes: 0,
       // 是否正在抽奖
       isRolling: false,
-      blueLight:Lottery.defaultProps.data.blueLight,
-      yellowLight:Lottery.defaultProps.data.yellowLight,
-      startBtnImg:Lottery.defaultProps.data.startBtnImg,
+      blueLight:Lottery.defaultProps.blueLight,
+      yellowLight:Lottery.defaultProps.yellowLight,
+      startBtnImg:Lottery.defaultProps.startBtnImg,
       showShade:false
     }
   }
@@ -116,14 +116,14 @@ class Lottery extends React.PureComponent {
           times: 0,
           actTimes: 0,
           isRolling: true,
-          startBtnImg:Lottery.defaultProps.data.startBtnImg,
+          startBtnImg:Lottery.defaultProps.startBtnImg,
           showShade:true
         }, () => {
             setTimeout(()=>{
-              this.setState({startBtnImg:Lottery.defaultProps.data.startBtnImgClicked})
+              this.setState({startBtnImg:Lottery.defaultProps.startBtnImgClicked})
             },500)
           // 状态还原之后才能开始真正的抽奖
-          this.handlePlay(this.props.data.rawRate!==null?this.props.data.rawRate:Lottery.defaultProps.data.rawRate)
+          this.handlePlay(this.props.rawRate!==null?this.props.rawRate:Lottery.defaultProps.rawRate)
         })
       }
     
@@ -164,6 +164,16 @@ class Lottery extends React.PureComponent {
             
           })
         },1000)
+        let awardInfo=this.props.rawList[this.state.prizeId];
+        if(awardInfo.prizeType=="1"){
+          //中奖 红包 awardInfo.redEnvelopeAmount 红包金额
+        }else if(awardInfo.prizeType=="2"){
+          //中奖 物品  awardInfo.stockId 物品id
+        }else if(awardInfo.prizeType=="3"){
+          //没中奖
+        }
+        this.props.handleLotteryResultModel(awardInfo);
+
         return
       }
 
@@ -199,7 +209,7 @@ class Lottery extends React.PureComponent {
     const { list, activedId } = this.state;
     return (
     <div className="prize" style={this.props.location!==null?this.props.location:Lottery.defaultProps.location}>
-        <div className="prize__container" style={{height:`${window.screen.width*0.8}px`,background: `url(${this.props.data.prizeBg!=null?this.props.data.prizeBg:Lottery.defaultProps.data.prizeBg}) left top no-repeat`,backgroundSize:"100% 100%"}}>
+        <div className="prize__container" style={{height:`${window.screen.width*0.8}px`,background: `url(${this.props.prizeBg!=null?this.props.prizeBg:Lottery.defaultProps.prizeBg}) left top / 100% 100% no-repeat`}}>
         <div className="container__area">
             <div className="begin__btn" onClick={() => this.handleBegin()} style={{background: `url(${this.state.startBtnImg}) left top / 100% 100% no-repeat`}}>
             {/* 点击开始 */}
@@ -258,16 +268,14 @@ class Lottery extends React.PureComponent {
 
 Lottery.defaultProps = {
     location:{left:"0rem",top:"5.6rem"},
-    data:{
-      prizeBg,
-      blueLight,
-      yellowLight,
-      rawItemBg,
-      startBtnImg,
-      startBtnImgClicked,
-      rawList:[{src:thanks,rawText:"谢谢参与"}, {src:anweijiang,rawText:"安慰奖"},{src:yidengjiang,rawText:"一等奖"} ,{src:erdengjiang,rawText:"二等奖"} ,{src:sandengjiang,rawText:"三等奖"} , {src:sidengjiang,rawText:"四等奖"}, {src:wudengjiang,rawText:"五等奖"}, {src:liudengjiang,rawText:"六等奖"},{src:qidengjiang,rawText:"七等奖"} ,{src:badengjiang,rawText:"八等奖"} , {src:thanks,rawText:"谢谢参与"}, {src:badengjiang,rawText:"八等奖"}],
-      rawRate:["2%", '18%', '5%', '35%', '5%', '5%', '5%', '5%', '5%', '5%', '5%', '5%']
-    }
+    prizeBg,
+    blueLight,
+    yellowLight,
+    rawItemBg,
+    startBtnImg,
+    startBtnImgClicked,
+    rawList:[{imageUrl:thanks,awardName:"谢谢参与"}, {imageUrl:anweijiang,awardName:"安慰奖"},{imageUrl:yidengjiang,awardName:"一等奖"} ,{imageUrl:erdengjiang,awardName:"二等奖"} ,{imageUrl:sandengjiang,awardName:"三等奖"} , {imageUrl:sidengjiang,awardName:"四等奖"}, {imageUrl:wudengjiang,awardName:"五等奖"}, {imageUrl:liudengjiang,awardName:"六等奖"},{imageUrl:qidengjiang,awardName:"七等奖"} ,{imageUrl:badengjiang,awardName:"八等奖"} , {imageUrl:thanks,awardName:"谢谢参与"}, {imageUrl:badengjiang,awardName:"八等奖"}],
+    rawRate:["2%", '18%', '5%', '35%', '5%', '5%', '5%', '5%', '5%', '5%', '5%', '5%']
 };
 
 export default Lottery;

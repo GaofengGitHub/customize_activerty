@@ -20,20 +20,27 @@ class App extends React.PureComponent {
       titleImg:{showTitleImg:true,titleImgSrc:titleImg,location:{top:"0.2rem"},titileImgBox:"titileImgBox animated"},
       ActivityMethod:{showActivityMethod:true,activityMethodSrc:null,location:null,activityMethodClass:null},
       Lottery:{
-        showLottery:true,
+        lotteryIsShow:"1",
         type:null,
         location:null,
-        data:{
-          "prizeBg":"https://7020498.h40.faiusr.com/4/461/ACgIABAEGAAgicHG2gUo3PDKigIw-gM4-gM.png",
-			    "blueLight":"http://7020498.h40.faiusr.com/4/461/ACgIABAEGAAgrsbUyAUo_IubMzAcOBw.png",
-			    "yellowLight":"http://7020498.h40.faiusr.com/4/461/ACgIABAEGAAgqMbUyAUo4ML2pAYwHDgc.png",
-			    "rawItemBg":"http://7020498.h40.faiusr.com/4/461/ACgIABAEGAAgtMbUyAUowvXEygIwhgE4hgE.png",
-			    "startBtnImg":"http://7020498.h40.faiusr.com/4/461/ACgIABAEGAAg_8bUyAUooKvYsQMwhgE4hgE.png",
-			    "startBtnImgClicked":"http://7020498.h40.faiusr.com/4/461/ACgIABAEGAAg_MbUyAUou8nkmAIwhgE4hgE.png",
-			    "rawList":[{src:"http://7020498.h40.faiusr.com/4/461/ACgIABAEGAAgy8bUyAUoh7Wd8gUwhgE4hgE.png",rawText:"谢谢参1与"}, {src:"http://7020498.h40.faiusr.com/4/461/ACgIABAEGAAg2rmmzwUojoWKmwYwhgE4hgE.png",rawText:"安慰奖"},{src:"https://7020498.h40.faiusr.com/4/461/ACgIABAEGAAglcvs2QUo1-zKtQQwhgE4hgE.png",rawText:"一等奖"} ,{src:"https://7020498.h40.faiusr.com/4/461/ACgIABAEGAAgmcvs2QUovPiiRjCGATiGAQ.png",rawText:"二等奖"} ,{src:"https://7020498.h40.faiusr.com/4/461/ACgIABAEGAAgncvs2QUo1biavwcwhgE4hgE.png",rawText:"三等奖"} , {src:"https://7020498.h40.faiusr.com/4/461/ACgIABAEGAAgosvs2QUojPDKigYwhgE4hgE.png",rawText:"四等奖"}, {src:"https://7020498.h40.faiusr.com/4/461/ACgIABAEGAAgpsvs2QUo_-if8gMwhgE4hgE.png",rawText:"五等奖"}, {src:"https://7020498.h40.faiusr.com/4/461/ACgIABAEGAAgq8vs2QUooJa9iQYwhgE4hgE.png",rawText:"六等奖"},{src:"https://7020498.h40.faiusr.com/4/461/ACgIABAEGAAgsMvs2QUo0M-eyAYwhgE4hgE.png",rawText:"七等奖"} ,{src:"https://7020498.h40.faiusr.com/4/461/ACgIABAEGAAgtMvs2QUolPnr4gcwhgE4hgE.png",rawText:"八等奖"} , {src:"http://7020498.h40.faiusr.com/4/461/ACgIABAEGAAgy8bUyAUoh7Wd8gUwhgE4hgE.png",rawText:"谢谢参与"}, {src:"https://7020498.h40.faiusr.com/4/461/ACgIABAEGAAgtMvs2QUolPnr4gcwhgE4hgE.png",rawText:"八等奖"}],
-          "rawRate":["2%", "18%", "5%", "35%", "5%", "5%", "5%", "5%", "5%", "5%", "5%", "5%"]
-        }
-      }
+        prizeBgUrl:null,
+        blueLightUrl:null,
+        yellowLightUrl:null,
+        rawitemBgUrl:null,
+        startBtnImgUrl:null,
+        startBtnImgClickedUrl:null,
+        rawList:null,
+        rawRate:null
+      },
+      AlreadyIn:{
+        showAlreadyIn:true,
+        participateNum:""
+      },
+      LotterOpp:{
+        showLotterOpp:true,
+        lotterOppTimes:""
+      },
+      showOrHideResultModel:""
     };
     this.Lottery=null;
     this.AppBox = "AppBox";
@@ -44,16 +51,33 @@ class App extends React.PureComponent {
   }
 
   componentWillMount(){
-    getCustomizeInfo("2ae5ce83e79145f99de96c01dd43ac3a",(res)=>{
+    getCustomizeInfo("c18cc7c18a02420380435af49650104d",(res)=>{
       console.log(`定制化页面数据====${JSON.stringify(res)}`);
       if(res.success){
         this.setState({loading:false});
-        if(res.data.activityBgUrl!=""){
-          this.setState({activeBg:res.data.activityBgUrl});
+        if(res.data.template.activityBgUrl!=""){
+          this.setState({activeBg:res.data.template.activityBgUrl});
         }
-        this.setState({MusicPlay:{showMusicPlay:res.data.musicPlayIsShow==1?true:false,audioSrc:res.data.audioSrcUrl,location:{left:"0.5rem",top:"0.5rem"}}});
-        this.setState({titleImg:{showTitleImg:res.data.titleImgIsShow==1?true:false,titleImgSrc:res.data.titleImgUrl,titileImgBox:"titileImgBox animated slideInDown",location:{top:"0.2rem"}}});
-        this.setState({ActivityMethod:{showActivityMethod:res.data.activityMethodIsShow==1?true:false,activityMethodSrc:res.data.activityMethodImgUrl,activityMethodClass:"pulseInfi",location:{right:"0.1rem",top:"0.1rem"}}});
+        this.setState({MusicPlay:{showMusicPlay:res.data.template.musicPlayIsShow==1?true:false,audioSrc:res.data.template.audioSrcUrl,location:{left:"0.5rem",top:"0.5rem"}}});
+        this.setState({titleImg:{showTitleImg:res.data.template.titleImgIsShow==1?true:false,titleImgSrc:res.data.template.titleImgUrl,titileImgBox:"titileImgBox animated slideInDown",location:{top:"0.2rem"}}});
+        this.setState({ActivityMethod:{showActivityMethod:res.data.template.activityMethodIsShow==1?true:false,activityMethodSrc:res.data.template.activityMethodImgUrl,activityMethodClass:"pulseInfi",location:{right:"0.1rem",top:"0.1rem"}}});
+        this.setState({
+          Lottery:{
+            lotteryIsShow:res.data.templateType.lotteryIsShow,
+            type:res.data.templateType.type,
+            location:{left:"0rem",top:"5.6rem"},
+            prizeBgUrl:res.data.templateType.prizeBgUrl,
+            blueLightUrl:res.data.templateType.blueLightUrl,
+            yellowLightUrl:res.data.templateType.yellowLightUrl,
+            rawitemBgUrl:res.data.templateType.rawitemBgUrl,
+            startBtnImgUrl:res.data.templateType.startBtnImgUrl,
+            startBtnImgClickedUrl:res.data.templateType.startBtnImgClickedUrl,
+            rawList:res.data.templateType.rawList,
+            rawRate:res.data.templateType.rawList.map((val,index)=>`${val.winningProbability*100}%`)
+          }
+        })
+        this.setState({AlreadyIn:{showAlreadyIn:res.data.template.participateNumIsShow==1?true:false,participateNum:res.data.template.participateNum}});
+        this.setState({LotterOpp:{showLotterOpp:res.data.template.lotterOppIsShow==1?true:false,lotterOppTimes:res.data.template.lotterOppTimes}});
 
       }else{
         Toast.info("获取页面失败",1);
@@ -67,16 +91,23 @@ class App extends React.PureComponent {
 
   }
 
+  handleLotteryResultModel(awardInfo){
+    console.log(`handleLotteryResultModel ${awardInfo}`)
+    this.setState({showOrHideResultModel:"fadeInRight"});
+    
+  }
+
   
 
   render() {
-    if(this.state.Lottery.showLottery){
+    if(this.state.Lottery.lotteryIsShow=='1'){
+      const defaultLottery=<Lottery location={this.state.Lottery.location} prizeBg={this.state.Lottery.prizeBgUrl} blueLight={this.state.Lottery.blueLightUrl} yellowLight={this.state.Lottery.yellowLightUrl} rawItemBg={this.state.Lottery.rawitemBgUrl} startBtnImg={this.state.Lottery.startBtnImgUrl} startBtnImgClicked={this.state.Lottery.startBtnImgClickedUrl} rawList={this.state.Lottery.rawList} rawRate={this.state.Lottery.rawRate} handleLotteryResultModel={this.handleLotteryResultModel.bind(this)}/>;
       switch(this.state.Lottery.type){
         case "12grid":
-          this.Lottery=<Lottery location={this.state.Lottery.location} data={this.state.Lottery.data}/>
+          this.Lottery=defaultLottery;
         break;
         default:
-          this.Lottery=<Lottery location={this.state.Lottery.location} data={this.state.Lottery.data}/>
+          this.Lottery=defaultLottery;
         break;
       }
       
@@ -108,8 +139,9 @@ class App extends React.PureComponent {
             {this.state.titleImg.showTitleImg?<img src={this.state.titleImg.titleImgSrc} className={this.state.titleImg.titileImgBox} style={this.state.titleImg.location}/>:<React.Fragment></React.Fragment>}
             {this.state.ActivityMethod.showActivityMethod?<ActivityMethod activertyMethodImgSrc={this.state.ActivityMethod.activityMethodSrc} activityMethodClass={this.state.ActivityMethod.activityMethodClass} location={this.state.ActivityMethod.location}/>:<React.Fragment></React.Fragment>}
             {this.Lottery}
-            <p className="alreadyIn" style={this.alreadyInLocation}>已有 1 人参与</p>
-            <p className="chance" style={this.chanceLocation}>您今天还有 3 次抽奖机会</p>
+            {this.state.AlreadyIn.showAlreadyIn?<p className="alreadyIn" style={this.alreadyInLocation}>已有 {this.state.AlreadyIn.participateNum} 人参与</p>:<React.Fragment></React.Fragment>}
+            {this.state.LotterOpp.showLotterOpp?<p className="chance" style={this.chanceLocation}>您今天还有 {this.state.LotterOpp.lotterOppTimes} 次抽奖机会</p>:<React.Fragment></React.Fragment>}
+            {/* <ModelPage class={this.state.showOrHide} handleCloseModel={this.handleCloseModel.bind(this)}/> */}
           </div>
           
         </div>);
