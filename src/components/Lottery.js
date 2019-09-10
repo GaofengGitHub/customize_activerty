@@ -36,12 +36,10 @@ class RowItem extends React.PureComponent {
   }
 }
 
-class Lottery extends React.PureComponent {
+class Lottery extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      // 九宫格内容list
-      list:props.rawList!==null?props.rawList:Lottery.defaultProps.rawList ,
       // 被选中的格子的ID
       activedId: '',
       // 中奖ID
@@ -58,7 +56,23 @@ class Lottery extends React.PureComponent {
       showShade:false
     }
   }
-  componentWillMount(){
+  componentWillReceiveProps(nextProps) {
+    if(this.props.blueLight!==nextProps.blueLight){
+      this.setState({blueLight: nextProps.blueLight,yellowLight: nextProps.yellowLight,startBtnImg: nextProps.startBtnImg},()=>{
+      });
+    }
+      
+  }
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   console.log(this.props.blueLight)
+  //   console.log(nextProps.blueLight)
+  //   if (this.props.blueLight !== nextProps.blueLight) {
+  //     return true;
+  //   }
+    
+  //   return false;
+  // }
+  componentDidMount(){
     setInterval(()=>{
         this.setState((prevState)=>({"blueLight":prevState.yellowLight,"yellowLight":prevState.blueLight}))
     },500)
@@ -122,6 +136,7 @@ class Lottery extends React.PureComponent {
             setTimeout(()=>{
               this.setState({startBtnImg:Lottery.defaultProps.startBtnImgClicked})
             },500)
+
           // 状态还原之后才能开始真正的抽奖
           this.handlePlay(this.props.rawRate!==null?this.props.rawRate:Lottery.defaultProps.rawRate)
         })
@@ -143,7 +158,7 @@ class Lottery extends React.PureComponent {
       activedId: 0
     })
     // 随机算出一个动画执行的最小次数，这里可以随机变更数值，按自己的需求来
-    let times = this.state.list.length * Math.floor(Math.random() * 5 + 4)
+    let times = this.props.rawList.length * Math.floor(Math.random() * 5 + 4)
     this.setState({
       times: times
     })
@@ -206,7 +221,8 @@ class Lottery extends React.PureComponent {
     }, 40)
   }
   render() {
-    const { list, activedId } = this.state;
+    const { activedId } = this.state;
+    const list = (this.props.rawList !==null && this.props.rawList.length==12)? this.props.rawList:Lottery.defaultProps.rawList;
     return (
     <div className="prize" style={this.props.location!==null?this.props.location:Lottery.defaultProps.location}>
         <div className="prize__container" style={{height:`${window.screen.width*0.8}px`,background: `url(${this.props.prizeBg!=null?this.props.prizeBg:Lottery.defaultProps.prizeBg}) left top / 100% 100% no-repeat`}}>

@@ -8,6 +8,7 @@ import './App.css';
 import './assets/css/animate.min.css';
 import MusicPlay from './components/MuiscPlay';
 import ActivityMethod from './components/ActivityMethod';
+import ResultModel from './components/ResultModel';
 import Lottery from './components/Lottery';
 import {getCustomizeInfo} from './utils/Data';
 
@@ -29,9 +30,9 @@ class App extends React.PureComponent {
         rawitemBgUrl:null,
         startBtnImgUrl:null,
         startBtnImgClickedUrl:null,
-        rawList:null,
-        rawRate:null
+        rawList:null
       },
+      rawRate:null,
       AlreadyIn:{
         showAlreadyIn:true,
         participateNum:""
@@ -72,8 +73,7 @@ class App extends React.PureComponent {
             rawitemBgUrl:res.data.templateType.rawitemBgUrl,
             startBtnImgUrl:res.data.templateType.startBtnImgUrl,
             startBtnImgClickedUrl:res.data.templateType.startBtnImgClickedUrl,
-            rawList:res.data.templateType.rawList,
-            rawRate:res.data.templateType.rawList.map((val,index)=>`${val.winningProbability*100}%`)
+            rawList:res.data.templateType.rawList
           }
         })
         this.setState({AlreadyIn:{showAlreadyIn:res.data.template.participateNumIsShow==1?true:false,participateNum:res.data.template.participateNum}});
@@ -92,16 +92,19 @@ class App extends React.PureComponent {
   }
 
   handleLotteryResultModel(awardInfo){
-    console.log(`handleLotteryResultModel ${awardInfo}`)
-    this.setState({showOrHideResultModel:"fadeInRight"});
+    console.log(`handleLotteryResultModel ${JSON.stringify(awardInfo)}`)
+    this.setState({showOrHideResultModel:"fadeInDown"});
     
+  }
+  handleCloseResultModel(){
+    this.setState({showOrHideResultModel:"fadeOutUp"});
   }
 
   
 
   render() {
     if(this.state.Lottery.lotteryIsShow=='1'){
-      const defaultLottery=<Lottery location={this.state.Lottery.location} prizeBg={this.state.Lottery.prizeBgUrl} blueLight={this.state.Lottery.blueLightUrl} yellowLight={this.state.Lottery.yellowLightUrl} rawItemBg={this.state.Lottery.rawitemBgUrl} startBtnImg={this.state.Lottery.startBtnImgUrl} startBtnImgClicked={this.state.Lottery.startBtnImgClickedUrl} rawList={this.state.Lottery.rawList} rawRate={this.state.Lottery.rawRate} handleLotteryResultModel={this.handleLotteryResultModel.bind(this)}/>;
+      const defaultLottery=<Lottery location={this.state.Lottery.location} prizeBg={this.state.Lottery.prizeBgUrl} blueLight={this.state.Lottery.blueLightUrl} yellowLight={this.state.Lottery.yellowLightUrl} rawItemBg={this.state.Lottery.rawitemBgUrl} startBtnImg={this.state.Lottery.startBtnImgUrl} startBtnImgClicked={this.state.Lottery.startBtnImgClickedUrl} rawList={this.state.Lottery.rawList} rawRate={this.state.rawRate} handleLotteryResultModel={this.handleLotteryResultModel.bind(this)}/>;
       switch(this.state.Lottery.type){
         case "12grid":
           this.Lottery=defaultLottery;
@@ -141,7 +144,7 @@ class App extends React.PureComponent {
             {this.Lottery}
             {this.state.AlreadyIn.showAlreadyIn?<p className="alreadyIn" style={this.alreadyInLocation}>已有 {this.state.AlreadyIn.participateNum} 人参与</p>:<React.Fragment></React.Fragment>}
             {this.state.LotterOpp.showLotterOpp?<p className="chance" style={this.chanceLocation}>您今天还有 {this.state.LotterOpp.lotterOppTimes} 次抽奖机会</p>:<React.Fragment></React.Fragment>}
-            {/* <ModelPage class={this.state.showOrHide} handleCloseModel={this.handleCloseModel.bind(this)}/> */}
+            <ResultModel class={this.state.showOrHideResultModel} handleCloseResultModel={this.handleCloseResultModel.bind(this)}/>
           </div>
           
         </div>);

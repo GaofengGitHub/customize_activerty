@@ -1,0 +1,86 @@
+.modelBox{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    background: rgba(0, 0, 0, 0.8);
+    top: 0;
+    transform: translate3d(100%,0,0);
+}
+.fadeOutUp{
+    transform:none;
+}
+.modelContent{
+    color: white;
+    width: 93%;
+    margin: auto;
+    height: 100%;
+    position: relative;
+}
+.contentTitle{
+    text-align: center;
+    font-size: 22px;
+    margin: 1.5rem 0px 0px;
+}
+.awardImgBox{
+    
+}
+.light{
+    position: relative;
+    top: -1.8rem;
+    background: url("../../img/light.png") left top no-repeat;
+    width: 350px;
+    height: 350px;
+    background-size: 100% 100%;
+    transform: translateX(-50%);
+    animation: rotateSelf 5s infinite linear;
+    -webkit-animation: rotateSelf 5s infinite linear;
+}
+@keyframes rotateSelf{
+    from{
+        transform:rotate(0deg);
+    }to{
+        transform: rotate(360deg);
+    }
+}
+.giftImg{
+    position: absolute;
+    width: 3.55rem;
+    left: 50%;
+    top: -1.8rem;
+    margin-top: 200px;
+    transform: translate(-50%,-50%);
+}
+
+.yellowText{
+    color: #fff000;
+}
+.awardName{
+    font-size: 24px;
+    text-align: center;
+    margin-top: -3.5rem;
+}
+.awardInfo{
+    font-size: 22px;
+    margin: 15px 0px;
+    text-align: center;
+}
+.closeBtn{
+    display: block;
+    color: white;
+    background-color: #41bd43;
+    width: 50%;
+    margin:0.3rem auto 0;
+    text-align: center;
+    padding: 0.3rem 0px;
+    border-radius: 0.2rem;
+    font-size: 16px;
+}
+.notAwardImg{
+    display: block;
+    width: 85%;
+    margin: 2rem auto;
+}
+
+
+
