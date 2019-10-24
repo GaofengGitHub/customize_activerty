@@ -47,7 +47,7 @@
     position: absolute;
     width: 3.55rem;
     left: 50%;
-    top: -1.8rem;
+    top: 0rem;
     margin-top: 200px;
     transform: translate(-50%,-50%);
 }
@@ -82,5 +82,12 @@
     margin: 2rem auto;
 }
 
+.clearfix:before,.clearfix:after{
+    display: "table";
+    content:''
+}
+.clearfix:after{
+    clear: both;
+}
 
 

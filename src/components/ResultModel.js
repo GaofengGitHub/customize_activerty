@@ -18,12 +18,12 @@
 import React from 'react';
 import '../assets/css/components/ResultModel.css';
 import gift from '../assets/img/gift.png';
-import notAwardImg from '../assets/img/faiImg1-2.png';
+import notAwardImg from '../assets/img/faiImg1-2.png'; 
 
 class ResultModel extends React.PureComponent {
   constructor(props) {
     super(props);
-    this.state = {activeTab:"manule"};
+    this.state = {activeTab:"manule",awardInfo:{isPrize:null}};
     this.audioDom = null;
   }
 
@@ -34,26 +34,41 @@ class ResultModel extends React.PureComponent {
       this.setState({activeTab:"award"})
     }
   }
+  componentWillReceiveProps(nextProps) {
+    if(this.props.awardInfo!==nextProps.awardInfo){
+      this.setState({awardInfo: nextProps.awardInfo},()=>{
+        
+      });
+    }
+      
+  }
   
 
   render(){
-    return (
-      <div className={`modelBox animated ${this.props.class}`}>
-        <div className="modelContent">
-          {/* <div className="contentTitle">
-            恭喜你获得了
+    let modelContent;
+      if(this.state.awardInfo.isPrize){
+        modelContent=<div className="modelContent clearfix">
+        <div className="contentTitle ">
+          恭喜你获得了
+        </div>
+        <div className="awardImgBox">
+          <div className="light">
           </div>
-          <div className="awardImgBox">
-            <div className="light">
-            </div>
-            <img src={gift} className="giftImg"/>
-          </div>
-          <div className="yellowText awardName">一等奖</div>
-          <p className="awardInfo">价值100元礼品</p>
-          <a className="closeBtn" onClick={this.props.handleCloseResultModel}>返回首页</a> */}
+          <img src={gift} className="giftImg"/>
+        </div>
+        <div className="yellowText awardName">{this.state.awardInfo.awardName}</div>
+        <p className="awardInfo">{this.state.awardInfo.msg}</p>
+        <a className="closeBtn" onClick={this.props.handleCloseResultModel}>返回首页</a>
+      </div>
+      }else{
+        modelContent=<div className="modelContent clearfix">
           <img src={notAwardImg} className="notAwardImg" />
           <a className="closeBtn" onClick={this.props.handleCloseResultModel}>再来一次</a>
-        </div>
+      </div>
+      }
+    return (
+      <div className={`modelBox animated ${this.props.class}`}>
+        {modelContent}
       </div>
     )
   }

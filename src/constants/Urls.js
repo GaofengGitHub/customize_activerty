@@ -31,7 +31,7 @@ export const WEXIN_ARTICLE_TYPE = 'http://route.showapi.com/582-1';
 //  export const HOST_CONFIG = 'http://192.168.31.186:8080/zhsxd/'; //仇中雪
 // export const HOST_CONFIG = 'http://192.168.241.48:18080/zhsxd/'; //内网测试
 //  export const HOST_CONFIG = 'http://192.168.31.56:8080/zhsxd/'; //蒋帅
-    export const HOST_CONFIG = 'http://192.168.241.130:7070/yxpt/'; //仇中雪
+    export const HOST_CONFIG = 'http://192.168.241.130:8080/yxpt/'; //仇中雪
 //	export const HOST_CONFIG = 'http://120.55.168.21:28080/zhsxd/'; //预生产  
 	// export const HOST_CONFIG = 'http://47.102.23.142:8080/zhsxd/'; //负载均衡
 
@@ -57,8 +57,10 @@ export const APP_OPERATION_MANUAL = HOST_CONFIG + 'resources/operation-document.
 
 /*接口地址*/
 export const API_CONFIG = {
-    //登录
-    getCustomizeInfo: HOST_CONFIG + 'client/activity/templateCon/getTemplate',
+    //获取模板活动元素信息
+    getCustomizeInfo: HOST_CONFIG + 'api/act/temp/activityTemplate',
+    //抽奖
+    drawLottey: HOST_CONFIG + 'api/act/draw',
     //登录
     login: HOST_CONFIG + 'mobile/login/userLogin',
     //天气

@@ -15,19 +15,23 @@
  * limitations under the License.
  *
  */
-import { combineReducers } from 'redux'; 
-import read from './read';
-import category from './category'; 
-import login from './login';
-import app from './app';
-import lottery from './lottery';
+import * as types from '../constants/ActionTypes';
 
-const rootReducer = combineReducers({
-  read,
-  category,
-  login,
-  app,
-  lottery
-});
+const initialState = {  
+};
 
-export default rootReducer;
+export default function lottery(state = initialState, action) {
+  switch (action.type) {
+    case types.DOWN_DRAW_TIMES:
+        return Object.assign({}, state, {
+            drawTimes: --action.drawTimes
+        });
+
+        case types.SET_DRAW_TIMES:
+        return Object.assign({}, state, {
+            drawTimes: action.drawTimes
+        });
+    default:
+      return state;
+  }
+}

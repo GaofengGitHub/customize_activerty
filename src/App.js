@@ -11,6 +11,8 @@ import ActivityMethod from './components/ActivityMethod';
 import ResultModel from './components/ResultModel';
 import Lottery from './components/Lottery';
 import {getCustomizeInfo} from './utils/Data';
+import { store } from '.';
+import {downDrawTimes,setDrawTimes} from  './actions/lottery';
 
 class App extends React.PureComponent {
   constructor(props) {
@@ -41,7 +43,8 @@ class App extends React.PureComponent {
         showLotterOpp:true,
         lotterOppTimes:""
       },
-      showOrHideResultModel:""
+      showOrHideResultModel:"",
+      awardInfo:null
     };
     this.Lottery=null;
     this.AppBox = "AppBox";
@@ -52,7 +55,7 @@ class App extends React.PureComponent {
   }
 
   componentWillMount(){
-    getCustomizeInfo("c18cc7c18a02420380435af49650104d",(res)=>{
+    getCustomizeInfo("9ddb754766e843b8a3674860be68d7b2","1234",(res)=>{
       console.log(`定制化页面数据====${JSON.stringify(res)}`);
       if(res.success){
         this.setState({loading:false});
@@ -73,11 +76,12 @@ class App extends React.PureComponent {
             rawitemBgUrl:res.data.templateType.rawitemBgUrl,
             startBtnImgUrl:res.data.templateType.startBtnImgUrl,
             startBtnImgClickedUrl:res.data.templateType.startBtnImgClickedUrl,
-            rawList:res.data.templateType.rawList
+            rawList:res.data.templateType.rawList.map((item,index) => ({"imageUrl":item.imageUrl,"awardName":item.awardName,"rawId":item.id}))
           }
         })
         this.setState({AlreadyIn:{showAlreadyIn:res.data.template.participateNumIsShow==1?true:false,participateNum:res.data.template.participateNum}});
         this.setState({LotterOpp:{showLotterOpp:res.data.template.lotterOppIsShow==1?true:false,lotterOppTimes:res.data.template.lotterOppTimes}});
+        store.dispatch(setDrawTimes(res.data.template.lotterOppTimes))
 
       }else{
         Toast.info("获取页面失败",1);
@@ -93,7 +97,17 @@ class App extends React.PureComponent {
 
   handleLotteryResultModel(awardInfo){
     console.log(`handleLotteryResultModel ${JSON.stringify(awardInfo)}`)
-    this.setState({showOrHideResultModel:"fadeInDown"});
+    this.setState((prevState,props) => {
+      console.log(parseInt(prevState.LotterOpp.lotterOppTimes));
+      // let times=parseInt(prevState.LotterOpp.lotterOppTimes);
+      store.dispatch(downDrawTimes(prevState.LotterOpp.lotterOppTimes))
+      // times--;
+      // if(times<0){
+      //   times=0;
+      // }
+      return {showOrHideResultModel:"fadeInDown",awardInfo,LotterOpp:{showLotterOpp:true,lotterOppTimes:store.getState().lottery.drawTimes}}
+    }
+    );
     
   }
   handleCloseResultModel(){
@@ -144,7 +158,7 @@ class App extends React.PureComponent {
             {this.Lottery}
             {this.state.AlreadyIn.showAlreadyIn?<p className="alreadyIn" style={this.alreadyInLocation}>已有 {this.state.AlreadyIn.participateNum} 人参与</p>:<React.Fragment></React.Fragment>}
             {this.state.LotterOpp.showLotterOpp?<p className="chance" style={this.chanceLocation}>您今天还有 {this.state.LotterOpp.lotterOppTimes} 次抽奖机会</p>:<React.Fragment></React.Fragment>}
-            <ResultModel class={this.state.showOrHideResultModel} handleCloseResultModel={this.handleCloseResultModel.bind(this)}/>
+            <ResultModel class={this.state.showOrHideResultModel} handleCloseResultModel={this.handleCloseResultModel.bind(this)}  awardInfo={this.state.awardInfo} />
           </div>
           
         </div>);
